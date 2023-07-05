@@ -13,7 +13,15 @@ class Client(models.Model):
     comment = models.TextField(max_length=100, verbose_name='Комментарий', **NULLABLE)
 
     def __str__(self):
-        return f'Имя: {self.first_name}\nФамилия: {self.last_name}\nПочта: {self.email}'
+        return f'Почта: {self.email}'
+
+class Message(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    letter_subject = models.CharField(verbose_name='Тема письма')
+    letter_body = models.TextField(verbose_name='Тело письма')
+
+    def __str__(self):
+        return f'{self.client.email} тема: {self.letter_subject}'
 
 class Mailing(models.Model):
     CHOICES_PERIODICITY = (
@@ -28,15 +36,15 @@ class Mailing(models.Model):
         ('completed', 'Завершена'),
     )
 
-    mailing_time = models.TimeField()
-    periodicity = models.IntegerField(choices=CHOICES_PERIODICITY)
-    mailing_status = models.IntegerField(choices=STATUS_OPTIONS)
+    message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Принадлежность', related_name='mailing')
+    mailing_time = models.TimeField(verbose_name='Время отправки', default='12:00:00')
+    periodicity = models.CharField(max_length=10, choices=CHOICES_PERIODICITY, verbose_name='Переодичность', default='daily')
+    mailing_status = models.CharField(max_length=10, choices=STATUS_OPTIONS, verbose_name='Статус', default='created')
 
-class Massage(models.Model):
-    letter_subject = models.CharField(verbose_name='Тема письма')
-    letter_body = models.CharField(verbose_name='Тело письма')
+
 
 class MailingLogs(models.Model):
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
     date_time_attempt = models.DateTimeField()
     attempt_status = models.CharField(max_length=255)
     mailserver_response = models.TextField(**NULLABLE)
