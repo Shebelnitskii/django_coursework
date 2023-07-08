@@ -17,5 +17,5 @@ def validate_time(value):
 class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ['mailing_time', 'periodicity']
+        fields = ['mailing_time', 'periodicity', 'start_date', 'end_date']
 

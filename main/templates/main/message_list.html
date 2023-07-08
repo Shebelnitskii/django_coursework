@@ -12,10 +12,15 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5>{{ message.client }}</h5>
+                        <h5>Рассылка для {{ message.client.email }}</h5>
+                        {% if not message.mailing%}
                         <p class="card-text">Тема: {{ message.letter_subject }}</p>
-                        <p><small class="text-body-secondary">Сообщение: {{ message.letter_body }}</small></p>
+                        <p><small class="text-body-secondary"><span class="text-danger">Время и даты рассылок не созданы</span></small></p>
+                        {% else %}
                         <p><small class="text-body-secondary">Периодичность: {{ message.mailing.get_periodicity_display }}</small></p>
+                        <p><small class="text-body-secondary">Время отправки: {{ message.mailing.mailing_time }}</small></p>
+                        <p><small class="text-body-secondary">Дата начала рассылки: {{ message.mailing.start_date }}</small></p>
+                        <p><small class="text-body-secondary">Дата начала рассылки: {{ message.mailing.end_date }}</small></p>
                         <p>
                             <small>
                                 <span class="text-body-secondary">Статус:</span>
@@ -28,6 +33,7 @@
                                 {% endif %}
                             </small>
                         </p>
+                        {% endif %}
                          <div class="d-flex justify-content-between align-items-left">
                             <div class="btn-group">
                                 <a href="{% url 'main:message_detail' pk=message.pk %}" class="btn btn-outline-secondary">Подробнее</a>

@@ -12,8 +12,10 @@
                         {% if mailing %}
                         <p>Время отправки: {{ mailing.mailing_time }}</p>
                         <p>Периодичность отправки: {{ mailing.get_periodicity_display }}</p>
+                        <p>Дата начала: {{ mailing.start_date }}</p>
+                        <p>Дата завершения: {{ mailing.end_date }}</p>
                         <p>
-                            <span class="text-body-secondary">Статус:</span>
+                            <span>Статус:</span>
                             {% if mailing.mailing_status == 'created' %}
                             <span class="text-warning">{{ mailing.get_mailing_status_display }}</span>
                             {% elif mailing.mailing_status == 'started' %}
@@ -28,9 +30,6 @@
 
                         <div class="btn-group">
                             <a href="{% url 'main:message_list' %}" class="btn btn-outline-secondary">Вернуться</a>
-                            <a href="{% url 'main:message_delete' pk=message.pk %}"
-                               class="btn btn-danger">Удалить</a>
-
                         </div>
                     </div>
                 </div>
