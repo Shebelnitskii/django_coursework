@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_crontab',
     'django_celery_results',
+    'django_celery_beat',
 
     'main',
 ]
@@ -150,13 +151,15 @@ CACHES = {
 }
 
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
-CELERY_RESULT_BACKEND = 'db+postgresql://<DATABASE_USER>:<DATABASE_PASSWORD>@<DATABASE_HOST>/<DATABASE_NAME>'
-CELERY_TIMEZONE = os.getenv('CELERY_TIMEZONE')
-
-CELERY_APP = 'main'
-CELERY_BEAT_SCHEDULE = {
-    'send-email-every-minute': {
-        'task': 'main.tasks.send_email_task',
-        'schedule': 60.0,  # Каждую минуту
-    },
-}
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL')
+# CELERY_RESULT_BACKEND = 'db+postgresql://{USER}:{PASSWORD}@{HOST}/{NAME}'.format(
+#     USER=os.getenv('DATABASE_USER'),
+#     PASSWORD=os.getenv('DATABASE_PASSWORD'),
+#     HOST=os.getenv('DATABASE_HOST'),
+#     NAME=os.getenv('DATABASE_NAME')
+# )
+# CELERY_TIMEZONE = os.getenv('CELERY_TIMEZONE')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
