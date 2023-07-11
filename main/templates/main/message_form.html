@@ -3,35 +3,27 @@
 <div class="container mt-3" style="width: 95%; font-size: 14px" xmlns="http://www.w3.org/1999/html">
     <form method="post" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        {{ form }}
-        {% if not object %}
-        <p>Периодичность:</p>
-        {{ mailing_form.periodicity }}
-        <p>Новое время отправки:</p>
+        <p>Выберите почту(группу пользователей) для отправки рассылки:</p>
+        {{ form.client }}
+        <p>Тема письма:</p>
+        {{ form.letter_subject }}
+        <p>Текст:</p>
+        {{ form.letter_body }}
+        <p>Время отправки:</p>
         <input type="text" id="mailing_time" name="mailing_time" maxlength="8" placeholder="HH:MM:SS"
                pattern="(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])" required>
+        <p>Периодичность:</p>
+        {{ form.periodicity }}
         <p>Дата начала и окончания:</p>
         <div class="block d-flex">
             <div class="mr-2">
-                <input type="date" id="start_date" name="start_date" value="{{ mailing.start_date }}"
-                       title="Выберите дату начала">
+                {{ form.start_date }}
             </div>
             <div>
-                <input type="date" id="end_date" name="end_date" value="{{ mailing.end_date }}"
-                       title="Выберите дату завершения">
+                {{ form.end_date }}
             </div>
         </div>
-        {% endif %}
-        {% if object %}
-        <div class="container mt-3" style="width: 95%; font_size: 14px">
-            <div class="card p-3 mt-5" autocomplete="off">
-                {{ formset.management_form }}
-                {% for form in formset %}
-                {{ form }}
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
+
         <div class="d-flex justify-content-center align-items-left mt-3">
             <div class="btn-group">
                 <button type="submit" class="btn btn-success">{% if object %}Сохранить изменения{% else %}Создать
@@ -69,6 +61,7 @@
     event.target.value = formattedInput;
   });
 });
+
 
 
 </script>

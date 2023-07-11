@@ -14,17 +14,9 @@ class Client(models.Model):
     comment = models.TextField(max_length=100, verbose_name='Комментарий', **NULLABLE)
 
     def __str__(self):
-        return f'Почта: {self.email}'
+        return self.email
 
 class Message(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
-    letter_subject = models.CharField(verbose_name='Тема письма')
-    letter_body = models.TextField(verbose_name='Тело письма')
-
-    def __str__(self):
-        return f'{self.client.email} тема: {self.letter_subject}'
-
-class Mailing(models.Model):
     CHOICES_PERIODICITY = (
         ('daily', 'Раз в день'),
         ('weekly', 'Раз в неделю'),
@@ -37,17 +29,22 @@ class Mailing(models.Model):
         ('completed', 'Завершена'),
     )
 
-    message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Принадлежность', related_name='mailing')
+    letter_subject = models.CharField(verbose_name='Тема письма')
+    letter_body = models.TextField(verbose_name='Тело письма')
+
     mailing_time = models.TimeField(verbose_name='Время отправки', default='12:00:00')
     periodicity = models.CharField(max_length=10, choices=CHOICES_PERIODICITY, verbose_name='Периодичность рассылки', default='daily')
     mailing_status = models.CharField(max_length=10, choices=STATUS_OPTIONS, verbose_name='Статус', default='created')
     start_date = models.DateField(default=date.today, verbose_name='Дата начала рассылки')
     end_date = models.DateField(default=date.today, verbose_name='Дата окончания рассылки')
+    client = models.ManyToManyField('Client', verbose_name='Клиенты', related_name='messages')
 
+    def __str__(self):
+        return f'Тема: {self.letter_subject}'
 
 
 class MailingLogs(models.Model):
-    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
+    mailing = models.ForeignKey(Message, on_delete=models.CASCADE)
     date_time_attempt = models.DateTimeField()
     attempt_status = models.CharField(max_length=255)
     mailserver_response = models.TextField(**NULLABLE)

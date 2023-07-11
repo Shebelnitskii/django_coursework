@@ -1,5 +1,4 @@
 from .service import send
-
 from celery import shared_task
 
 @shared_task

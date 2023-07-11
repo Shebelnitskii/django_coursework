@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django_crontab',
     'django_celery_results',
     'django_celery_beat',
-
     'main',
 ]
 
@@ -163,3 +162,7 @@ CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CRONJOBS = [
+    ('5 * * * *', 'main.service.my_scheduled_job'),  # запускается каждые 5 минут
+]

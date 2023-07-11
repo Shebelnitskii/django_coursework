@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from main.models import Message
 
-def send():
+def my_scheduled_job():
     # messages = Message.objects.all()
     # for message in messages:
     #     email = message.client.email

@@ -13,27 +13,23 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5>Рассылка для {{ message.client.email }}</h5>
-                        {% if not message.mailing%}
                         <p class="card-text">Тема: {{ message.letter_subject }}</p>
-                        <p><small class="text-body-secondary"><span class="text-danger">Время и даты рассылок не созданы</span></small></p>
-                        {% else %}
-                        <p><small class="text-body-secondary">Периодичность: {{ message.mailing.get_periodicity_display }}</small></p>
-                        <p><small class="text-body-secondary">Время отправки: {{ message.mailing.mailing_time }}</small></p>
-                        <p><small class="text-body-secondary">Дата начала рассылки: {{ message.mailing.start_date }}</small></p>
-                        <p><small class="text-body-secondary">Дата начала рассылки: {{ message.mailing.end_date }}</small></p>
+                        <p><small class="text-body-secondary">Периодичность: {{ message.get_periodicity_display }}</small></p>
+                        <p><small class="text-body-secondary">Время отправки: {{ message.mailing_time }}</small></p>
+                        <p><small class="text-body-secondary">Дата начала рассылки: {{ message.start_date }}</small></p>
+                        <p><small class="text-body-secondary">Дата начала рассылки: {{ message.end_date }}</small></p>
                         <p>
                             <small>
                                 <span class="text-body-secondary">Статус:</span>
-                                {% if message.mailing.mailing_status == 'created' %}
-                                <span class="text-warning">{{ message.mailing.get_mailing_status_display }}</span>
-                                {% elif message.mailing.mailing_status == 'started' %}
-                                <span class="text-success">{{ message.mailing.get_mailing_status_display }}</span>
-                                {% elif message.mailing.mailing_status == 'completed' %}
-                                <span class="text-danger">{{ message.mailing.get_mailing_status_display }}</span>
+                                {% if message.mailing_status == 'created' %}
+                                <span class="text-warning">{{ message.get_mailing_status_display }}</span>
+                                {% elif message.mailing_status == 'started' %}
+                                <span class="text-success">{{ message.get_mailing_status_display }}</span>
+                                {% elif message.mailing_status == 'completed' %}
+                                <span class="text-danger">{{ message.get_mailing_status_display }}</span>
                                 {% endif %}
                             </small>
                         </p>
-                        {% endif %}
                          <div class="d-flex justify-content-between align-items-left">
                             <div class="btn-group">
                                 <a href="{% url 'main:message_detail' pk=message.pk %}" class="btn btn-outline-secondary">Подробнее</a>

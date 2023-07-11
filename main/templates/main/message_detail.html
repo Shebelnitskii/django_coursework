@@ -6,27 +6,23 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-body">
-                        <p>Рассылка для пользователя: {{ message.client.email }} </p>
+                        <p>Рассылка для пользователей: {{ message.client.all. }} </p>
                         <p>Тема письма: {{ message.letter_subject }}</p>
                         <p>Текст письма: {{ message.letter_body }}</p>
-                        {% if mailing %}
-                        <p>Время отправки: {{ mailing.mailing_time }}</p>
-                        <p>Периодичность отправки: {{ mailing.get_periodicity_display }}</p>
-                        <p>Дата начала: {{ mailing.start_date }}</p>
-                        <p>Дата завершения: {{ mailing.end_date }}</p>
+                        <p>Время отправки: {{ message.mailing_time }}</p>
+                        <p>Периодичность отправки: {{ message.get_periodicity_display }}</p>
+                        <p>Дата начала: {{ message.start_date }}</p>
+                        <p>Дата завершения: {{ message.end_date }}</p>
                         <p>
                             <span>Статус:</span>
-                            {% if mailing.mailing_status == 'created' %}
-                            <span class="text-warning">{{ mailing.get_mailing_status_display }}</span>
-                            {% elif mailing.mailing_status == 'started' %}
-                            <span class="text-success">{{ mailing.get_mailing_status_display }}</span>
-                            {% elif mailing.mailing_status == 'completed' %}
-                            <span class="text-danger">{{ mailing.get_mailing_status_display }}</span>
+                            {% if message.mailing_status == 'created' %}
+                            <span class="text-warning">{{ message.get_mailing_status_display }}</span>
+                            {% elif message.mailing_status == 'started' %}
+                            <span class="text-success">{{ message.get_mailing_status_display }}</span>
+                            {% elif message.mailing_status == 'completed' %}
+                            <span class="text-danger">{{ message.get_mailing_status_display }}</span>
                             {% endif %}
                         </p>
-                        {% else %}
-                        <p>Рассылка не существует</p>
-                        {% endif %}
 
                         <div class="btn-group">
                             <a href="{% url 'main:message_list' %}" class="btn btn-outline-secondary">Вернуться</a>

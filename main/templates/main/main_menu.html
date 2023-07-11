@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="row justify-content-center">
+    <h5 class="card-title text-muted text-center font-weight-bold">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h5 class="card-title text-muted text-center font-weight-bold">Всего рассылок</h5>
+                <p class="text-center">{{ total_mailings_count }}</p>
+            </div>
+            <div class="col-sm-4">
+                <h5 class="card-title text-muted text-center font-weight-bold">Действующие рассылки</h5>
+                <p class="text-center">{{ active_mailings_count }}</p>
+            </div>
+            <div class="col-sm-4">
+                <h5 class="card-title text-muted text-center font-weight-bold">Наши уникальные клиенты</h5>
+                <p class="text-center">{{ unique_clients_count }}</p>
+            </div>
+            <div class="col-sm-4">
+                <h5 class="card-title text-muted text-center font-weight-bold">Наши публикации</h5>
+                <p class="text-center"></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
