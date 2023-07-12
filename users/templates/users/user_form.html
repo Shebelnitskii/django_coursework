@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container mt-3" style="width: 95%; font_size: 14px">
+    <form method="post" enctype="multipart/form-data" class="card p-3 mt-5" autocomplete="off">
+        <h3>Данныe пользователя {{ user.email }}</h3>
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary mt-3 ">Сохранить</button>
+        <div class="block">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-info mt-3 ">Вернуться</a>
+        </div>
+        <div class="block">
+            <a href="{% url 'users:reset_password'  %}" class="btn btn-danger mt-3 ">Сброс пароля</a>
+        </div>
+    </form>
+</div>
+</div>
+
+{% endblock %}
