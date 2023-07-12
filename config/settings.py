@@ -28,7 +28,11 @@ SECRET_KEY = 'django-insecure-7ymmtxk#5@(i@@vx(%vfi6yft2exe+$9xr&h3j)6ya954+oz_)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SITE_ADRESS = "127.0.0.1:8000"
 ALLOWED_HOSTS = []
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Application definition
 
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'django_celery_results',
     'django_celery_beat',
+    'users',
     'main',
 ]
 
@@ -166,3 +171,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CRONJOBS = [
     ('5 * * * *', 'main.service.my_scheduled_job'),  # запускается каждые 5 минут
 ]
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
