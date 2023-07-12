@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="col-12">
+        {% if user.is_active or  user.is_superuser %}
+            <a href="{% url 'blog:blog_create' %}" class="btn btn-secondary m-2">Добавить публикацию</a>
+        {% endif %}
+    </div>
+    {% for object in object_list %}
+        <div class="col-md-5">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <p class="card-text">{{ object|title }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{% url 'blog:blog_details' object.pk %}"
+                               class="btn btn-sm btn-outline-secondary">Посмотреть публикацию</a>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="btn-group">
+                                <a href="{% url 'blog:blog_delete' object.pk %}"
+                                   class="btn btn-sm btn-outline-secondary">Удалить публикацию</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="col-12">
+        <a href="{% url 'main:main' %}" class="btn btn-secondary m-2"><< Назад</a>
+    </div>
+{% endblock %}
