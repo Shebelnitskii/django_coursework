@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+
+<div class="album py-5 bg-body-tertiary" style="justify-content: center;">
+    <div class="container">
+        <h5 class="card-title text-muted text-center font-weight-bold">Клиенты для рассылки</h5>
+        <a href="{% url 'main:client_create' %}" class="btn btn-secondary"> Добавить клиента </a>
+    </div>
+</div>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for client in client_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5>{{ client.email }}</h5>
+                        {% if user.is_staff %}
+                        <a href="{% url 'main:client_create' %}" class="btn btn-danger bt-sm"> Удалить клиента </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

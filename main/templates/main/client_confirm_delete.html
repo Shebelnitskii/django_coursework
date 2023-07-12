@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<section class="py-5 text-center container" xmlns="http://www.w3.org/1999/html">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="card">
+                <div class="body">
+                    <form method="post">
+                        {% csrf_token %}
+                        Удалить клиента {{ client.email }}?
+                        <p>
+                            <button type="submit" class="btn btn-danger">Подтверждение</button>
+                        </p>
+                        <p></p>
+                    </form>
+                </div>
+                <div class="card-footer mt-2">
+                    <a href="{% url 'main:message_update' pk=message.pk %}"
+                       class="btn btn-outline-secondary">Вернуться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

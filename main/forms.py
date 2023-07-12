@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import TimeInput, DateInput
-from main.models import Message
+from main.models import Message, Client
 
 
 class MessageForm(forms.ModelForm):
@@ -11,15 +11,16 @@ class MessageForm(forms.ModelForm):
             'start_date': DateInput(attrs={'type': 'date'}),
             'end_date': DateInput(attrs={'type': 'date'}),
         }
+
+
 def validate_time(value):
     try:
         forms.TimeField().clean(value)
     except forms.ValidationError:
         raise forms.ValidationError('Некорректное время')
 
-#
-# class MailingForm(forms.ModelForm):
-#     class Meta:
-#         model = Mailing
-#         fields = ['mailing_time', 'periodicity', 'start_date', 'end_date']
 
+class ClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ['email', 'first_name']

@@ -10,7 +10,7 @@ class Client(models.Model):
     first_name = models.CharField(max_length=100,  verbose_name='Имя')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия', **NULLABLE)
     surname = models.CharField(max_length=100, verbose_name='Отчество', **NULLABLE)
-    email = models.EmailField(max_length=100, verbose_name='Почта')
+    email = models.EmailField(max_length=100, unique=True, verbose_name='Почта')
     comment = models.TextField(max_length=100, verbose_name='Комментарий', **NULLABLE)
 
     def __str__(self):

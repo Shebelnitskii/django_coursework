@@ -3,7 +3,7 @@
 <div class="container mt-3" style="width: 95%; font-size: 14px" xmlns="http://www.w3.org/1999/html">
     <form method="post" class="card p-3 mt-5" autocomplete="off">
         {% csrf_token %}
-        <p>Выберите почту(группу пользователей) для отправки рассылки:</p>
+        <p>Выберите почту для отправки рассылки:</p>
         {{ form.client }}
         <p>Тема письма:</p>
         {{ form.letter_subject }}
