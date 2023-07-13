@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for logs in mailinglogs_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">Отчет на рассылку: {{ logs.mailing }}</p>
+                        <p><small class="text-body-secondary">Время получения лога: {{ logs.date_time_attempt }}</small></p>
+                        <p><small class="text-body-secondary">Статус: {{ logs.attempt_status }}</small></p>
+                        <p><small class="text-body-secondary">Ответ сервера: {{ logs.mailserver_response }}</small></p>
+                        <div class="d-flex justify-content-between align-items-left">
+                            <div class="btn-group">
+                                <a href="{% url 'main:mailinglogs_detail' pk=logs.pk %}"
+                                   class="btn btn-outline-secondary">Подробнее</a>
+                                <a href="{% url 'main:message_list' %}"
+                                   class="btn btn-outline-secondary">Вернуться</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

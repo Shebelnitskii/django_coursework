@@ -34,7 +34,7 @@
                                    class="btn btn-outline-secondary">Подробнее</a>
                                 <a href="{% url 'main:message_update' pk=message.pk %}"
                                    class="btn btn-secondary">Изменить</a>
-                                <a href=""
+                                <a href="{% url 'main:mailinglogs_list' %}"
                                    class="btn btn-outline-secondary">Отчёты по отправке</a>
                             </div>
                         </div>

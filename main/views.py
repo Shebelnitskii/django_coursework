@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from main.forms import MessageForm, ClientForm
-from main.models import Message, Client
+from main.models import Message, Client, MailingLogs
 from blog.models import BlogPost
 from random import sample
 
@@ -47,6 +47,7 @@ class MessageListView(generic.ListView):
 class MessageCreateView(generic.CreateView):
     model = Message
     form_class = MessageForm
+
     # fields = ('client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity', 'start_date', 'end_date')
 
     def get_success_url(self):
@@ -58,7 +59,6 @@ class MessageUpdateView(generic.UpdateView):
     form_class = MessageForm
     # fields = ('client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity', 'start_date', 'end_date')
     extra_context = {'extra_context': 'Изменить рассылку'}
-
 
     def get_success_url(self):
         return reverse('main:message_list')
@@ -85,12 +85,15 @@ class MessageDeleteView(generic.DeleteView):
     def get_success_url(self):
         return reverse('main:message_list')
 
+
 class ClientCreateView(generic.CreateView):
     model = Client
     form_class = ClientForm
     template_name = 'main/client_form.html'
+
     def get_success_url(self):
         return reverse('main:client_list')
+
 
 class CleitnListView(generic.ListView):
     model = Client
@@ -102,6 +105,7 @@ class CleitnListView(generic.ListView):
         context['title'] = 'Список клиентов'
         return context
 
+
 class ClientDeleteView(generic.DeleteView):
     model = Client
     template_name = 'main/client_confirm_delete.html'
@@ -110,3 +114,25 @@ class ClientDeleteView(generic.DeleteView):
 
     def get_success_url(self):
         return reverse('main:client_list')
+
+
+class LogsListView(generic.ListView):
+    model = MailingLogs
+    template_name = 'main/mailinglogs_list'
+    context_object_name = 'mailinglogs_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Логи рассылки'
+        return context
+
+
+class LogsDetailView(generic.DetailView):
+    model = MailingLogs
+    template_name = 'main/mailinglogs_detail.html'
+    context_object_name = 'mailing_log'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"Отчёты по рассылке"
+        return context

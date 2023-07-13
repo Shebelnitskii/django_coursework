@@ -2,7 +2,6 @@ from django.core.mail import send_mail
 
 from config import settings
 from main.models import Message, MailingLogs
-from django.core.cache import cache
 
 
 def daily_send():

@@ -40,7 +40,7 @@ class Message(models.Model):
     client = models.ManyToManyField('Client', verbose_name='Клиенты', related_name='messages')
 
     def __str__(self):
-        return f'Тема: {self.letter_subject}'
+        return f'{self.letter_subject}'
 
 
 class MailingLogs(models.Model):
