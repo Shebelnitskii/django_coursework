@@ -155,9 +155,7 @@ CACHES = {
 
 
 CRONJOBS = [
-    ('1 * * * *', 'main.crontab_tasks.daily_send'),  # запускается каждые 5 минут
-    # ('0 0 * * 0', 'main.crontab_tasks.weekly_send'),  # запускается каждое воскресенье в полночь
-    # ('0 0 1 * *', 'main.crontab_tasks.monthly_send'),  # запускается в первый день каждого месяца в полночь
+    ('1 * * * *', 'main.crontab_tasks.daily_send')
 ]
 
 AUTH_USER_MODEL = 'users.User'
