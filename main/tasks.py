@@ -1,4 +1,4 @@
-from .service import send
+from .crontab_tasks import send
 from celery import shared_task
 
 @shared_task

@@ -10,8 +10,6 @@
                         <p>Текст письма: {{ message.letter_body }}</p>
                         <p>Время отправки: {{ message.mailing_time }}</p>
                         <p>Периодичность отправки: {{ message.get_periodicity_display }}</p>
-                        <p>Дата начала: {{ message.start_date }}</p>
-                        <p>Дата завершения: {{ message.end_date }}</p>
                         <p>
                             <span>Статус:</span>
                             {% if message.mailing_status == 'created' %}

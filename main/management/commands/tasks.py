@@ -5,8 +5,22 @@ from config import settings
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        email = 'Shebelnitskiy@gmail.com'
-        subject = 'Тест Celery'
-        body = 'Работает?'
-        send_mail(subject=subject, message=body, from_email=settings.EMAIL_HOST_USER, recipient_list=[email],
-                  fail_silently=False)
+        for item in Message.objects.filter(periodicity='daily'):
+            send_mailing(item)
+
+def send_mailing(message_item: Message):
+    # Получаем список email-адресов клиентов, которым нужно отправить рассылку
+    clients_emails = message_item.client.values_list('email', flat=True)
+
+    # Отправляем письмо каждому клиенту
+    for email in clients_emails:
+        try:
+            send_mail(
+                message_item.letter_subject,  # Тема письма
+                message_item.letter_body,  # Тело письма
+                settings.EMAIL_HOST_USER,  # От кого отправляем письмо
+                [email],  # Кому отправляем письмо
+                fail_silently=False,
+            )
+        except Exception as e:
+            response = str(e)

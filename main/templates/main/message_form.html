@@ -14,16 +14,6 @@
                pattern="(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])" required>
         <p>Периодичность:</p>
         {{ form.periodicity }}
-        <p>Дата начала и окончания:</p>
-        <div class="block d-flex">
-            <div class="mr-2">
-                {{ form.start_date }}
-            </div>
-            <div>
-                {{ form.end_date }}
-            </div>
-        </div>
-
         <div class="d-flex justify-content-center align-items-left mt-3">
             <div class="btn-group">
                 <button type="submit" class="btn btn-success">{% if object %}Сохранить изменения{% else %}Создать

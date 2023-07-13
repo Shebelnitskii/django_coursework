@@ -1,10 +1,12 @@
 import random
 
+from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.utils.crypto import get_random_string
+from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, UpdateView
 from config import settings
@@ -47,12 +49,12 @@ class EmailVerificationView(View):
         try:
             email_verification = EmailVerification.objects.get(token=token)
             user = email_verification.user
-            user.is_active = True  # Активируем пользователя
+            user.is_active = True
             user.save()
-            email_verification.delete()  # Удаляем объект EmailVerification
-            return redirect(reverse('users:verify_email', args=[token]))
+            email_verification.delete()
+            return redirect('users:email_verified')
         except EmailVerification.DoesNotExist:
-            return HttpResponse('Ошибка верификации')  # Отображаем сообщение об ошибке
+            return redirect('users:email_verification_failed')
 
 class ProfileView(UpdateView):
     model = User
@@ -73,3 +75,9 @@ def reset_password(request):
     request.user.set_password(new_password)
     request.user.save()
     return redirect(reverse('main:category_list'))
+
+def email_verified_view(request):
+    return render(request, 'users/email_verified.html')
+
+def email_verification_failed_view(request):
+    return render(request, 'users/email_verification_failed.html')

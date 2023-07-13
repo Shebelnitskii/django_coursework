@@ -7,7 +7,7 @@
                 <div class="body">
                     <form method="post">
                         {% csrf_token %}
-                        Удалить рассылку для {{ message.client.email }}?
+                        Удалить рассылку {{ message.letter_subject }}?
                         <p><button type="submit" class="btn btn-danger">Подтверждение</button></p>
                         <p></p>
                     </form>

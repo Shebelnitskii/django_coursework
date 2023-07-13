@@ -35,8 +35,8 @@ class Message(models.Model):
     mailing_time = models.TimeField(verbose_name='Время отправки', default='12:00:00')
     periodicity = models.CharField(max_length=10, choices=CHOICES_PERIODICITY, verbose_name='Периодичность рассылки', default='daily')
     mailing_status = models.CharField(max_length=10, choices=STATUS_OPTIONS, verbose_name='Статус', default='created')
-    start_date = models.DateField(default=date.today, verbose_name='Дата начала рассылки')
-    end_date = models.DateField(default=date.today, verbose_name='Дата окончания рассылки')
+    # start_date = models.DateField(default=date.today, verbose_name='Дата начала рассылки')
+    # end_date = models.DateField(default=date.today, verbose_name='Дата окончания рассылки')
     client = models.ManyToManyField('Client', verbose_name='Клиенты', related_name='messages')
 
     def __str__(self):
@@ -45,6 +45,6 @@ class Message(models.Model):
 
 class MailingLogs(models.Model):
     mailing = models.ForeignKey(Message, on_delete=models.CASCADE)
-    date_time_attempt = models.DateTimeField()
+    date_time_attempt = models.DateTimeField(auto_now_add=True)
     attempt_status = models.CharField(max_length=255)
     mailserver_response = models.TextField(**NULLABLE)

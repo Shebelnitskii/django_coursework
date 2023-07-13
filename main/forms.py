@@ -6,7 +6,7 @@ from main.models import Message, Client
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ['client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity', 'start_date', 'end_date']
+        fields = ['client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity']
         widgets = {
             'start_date': DateInput(attrs={'type': 'date'}),
             'end_date': DateInput(attrs={'type': 'date'}),
