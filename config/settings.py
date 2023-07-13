@@ -153,9 +153,10 @@ CACHES = {
     }
 }
 
-
 CRONJOBS = [
-    ('1 * * * *', 'main.crontab_tasks.daily_send')
+    ('1 * * * *', 'main.crontab_tasks.daily_send'),
+    ('0 0 * * 0', 'main.services.weekly_send'),
+    ('0 0 1 * *', 'main.services.monthly_send')
 ]
 
 AUTH_USER_MODEL = 'users.User'
