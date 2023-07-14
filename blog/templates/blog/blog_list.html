@@ -13,15 +13,19 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for object in object_list %}
-            {% if user.is_staff or object.is_active %}
+            {% if user.is_staff or object.is_active or object.owner == user %}
             <div class="col-md-5">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <p class="card-text">{{ object|title }}</p>
+                        <p class="card-text">Тема: {{ object|title }}</p>
+                        <p class="card-text">Автор: {{ object.owner }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="{% url 'blog:blog_details' object.pk %}"
                                    class="btn btn-sm btn-outline-secondary">Посмотреть публикацию</a>
+                                {% if object.owner == user %}
+                                <a href="{% url 'blog:blog_update' pk=object.pk %}" class="btn btn-primary btn-sm">Изменить</a>
+                                {% endif %}
                                 {% if user.is_staff %}
                                 {% if object.is_active == False %}
                                 <a href="{% url 'blog:blog_publish' pk=object.pk %}" class="btn btn-warning btn-sm">Опубликовать</a>

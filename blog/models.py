@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from config import settings
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -16,6 +18,6 @@ class BlogPost(models.Model):
     pub_date = models.DateField(default=timezone.now, verbose_name='Дата публикации')
     is_active = models.BooleanField(default=False, verbose_name='активно')
 
-
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Автор')
     def __str__(self):
         return self.title

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -6,11 +7,22 @@ from .forms import BlogPostForm
 from .models import BlogPost
 
 
-class BlogCreateView(generic.CreateView):
+class BlogCreateView(LoginRequiredMixin, generic.CreateView):
     model = BlogPost
     template_name = 'blog/blog_create.html'
     form_class = BlogPostForm
     success_url = reverse_lazy('blog:blogs')
+    extra_context = {'title': 'Добавить пост'}
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 
 
 class BlogUpdateView(generic.UpdateView):
