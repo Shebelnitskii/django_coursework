@@ -1,6 +1,5 @@
 {% extends 'main/base.html' %}
 {% block content %}
-{% if user.is_staff %}
 <div class="album py-5 bg-body-tertiary" style="justify-content: center;">
     <div class="container">
         <h5 class="card-title text-muted text-center font-weight-bold">Клиенты для рассылки</h5>
@@ -26,5 +25,4 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endblock %}

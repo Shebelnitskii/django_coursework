@@ -1,59 +1,59 @@
-{% extends 'main/base.html' %}
-{% block content %}
-<div class="container mt-3" style="width: 95%; font-size: 14px" xmlns="http://www.w3.org/1999/html">
-    <form method="post" class="card p-3 mt-5" autocomplete="off">
-        {% csrf_token %}
-        <p>Выберите почту для отправки рассылки:</p>
-        {{ form.client }}
-        <p>Тема письма:</p>
-        {{ form.letter_subject }}
-        <p>Текст:</p>
-        {{ form.letter_body }}
-        <p>Время отправки:</p>
-        <input type="text" id="mailing_time" name="mailing_time" maxlength="8" placeholder="HH:MM:SS"
-               pattern="(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])" required>
-        <p>Периодичность:</p>
-        {{ form.periodicity }}
-        <div class="d-flex justify-content-center align-items-left mt-3">
-            <div class="btn-group">
-                <button type="submit" class="btn btn-success">{% if object %}Сохранить изменения{% else %}Создать
-                    рассылку{% endif %}
-                </button>
-                <a href="{% url 'main:message_list' %}" class="btn btn-outline-secondary">Вернуться</a>
-                {% if object %}
-                <a href="{% url 'main:message_delete' pk=message.pk %}" class="btn btn-danger">Удалить</a>
-                {% endif %}
+    {% extends 'main/base.html' %}
+    {% block content %}
+    <div class="container mt-3" style="width: 95%; font-size: 14px" xmlns="http://www.w3.org/1999/html">
+        <form method="post" class="card p-3 mt-5" autocomplete="off">
+            {% csrf_token %}
+            <p>Выберите почту для отправки рассылки:</p>
+            {{ form.client }}
+            <p>Тема письма:</p>
+            {{ form.letter_subject }}
+            <p>Текст:</p>
+            {{ form.letter_body }}
+            <p>Время отправки:</p>
+            <input type="text" id="mailing_time" name="mailing_time" maxlength="8" placeholder="HH:MM:SS"
+                   pattern="(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])" required>
+            <p>Периодичность:</p>
+            {{ form.periodicity }}
+            <div class="d-flex justify-content-center align-items-left mt-3">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success">{% if object %}Сохранить изменения{% else %}Создать
+                        рассылку{% endif %}
+                    </button>
+                    <a href="{% url 'main:message_list' %}" class="btn btn-outline-secondary">Вернуться</a>
+                    {% if object %}
+                    <a href="{% url 'main:message_delete' pk=message.pk %}" class="btn btn-danger">Удалить</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </form>
-</div>
-</div>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-  var timeInput = document.getElementById("mailing_time");
+        </form>
+    </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+      var timeInput = document.getElementById("mailing_time");
 
-  timeInput.addEventListener("input", function(event) {
-    var input = event.target.value.replace(/\D/g, "");
-    var formattedInput = "";
+      timeInput.addEventListener("input", function(event) {
+        var input = event.target.value.replace(/\D/g, "");
+        var formattedInput = "";
 
-    if (input.length > 2) {
-      formattedInput += input.substr(0, 2) + ":";
-      input = input.substr(2);
-    }
+        if (input.length > 2) {
+          formattedInput += input.substr(0, 2) + ":";
+          input = input.substr(2);
+        }
 
-    if (input.length > 2) {
-      formattedInput += input.substr(0, 2) + ":";
-      input = input.substr(2);
-    }
+        if (input.length > 2) {
+          formattedInput += input.substr(0, 2) + ":";
+          input = input.substr(2);
+        }
 
-    formattedInput += input;
+        formattedInput += input;
 
-    event.target.value = formattedInput;
-  });
-});
-
+        event.target.value = formattedInput;
+      });
+    });
 
 
-</script>
 
-{% endblock %}
+    </script>
+
+    {% endblock %}

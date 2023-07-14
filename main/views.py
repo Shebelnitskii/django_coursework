@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
@@ -71,6 +71,16 @@ class MessageUpdateView(generic.UpdateView):
 
     def get_success_url(self):
         return reverse('main:message_list')
+
+
+def complete_mailing(request, pk):
+    message = get_object_or_404(Message, id=pk)
+
+    # Изменяем статус рассылки на 'completed'
+    message.mailing_status = 'completed'
+    message.save()
+
+    return redirect('main:message_list')
 
 
 class MessageDetailView(generic.DetailView):

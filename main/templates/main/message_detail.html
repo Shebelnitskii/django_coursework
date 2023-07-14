@@ -9,6 +9,7 @@
                         <p>Тема письма: {{ message.letter_subject }}</p>
                         <p>Текст письма: {{ message.letter_body }}</p>
                         <p>Время отправки: {{ message.mailing_time }}</p>
+                        <p>Автор: {{ message.owner }}</p>
                         <p>Периодичность отправки: {{ message.get_periodicity_display }}</p>
                         <p>
                             <span>Статус:</span>
