@@ -3,6 +3,8 @@ import email
 from django.db import models
 from django.utils.datetime_safe import date
 
+from config import settings
+
 NULLABLE = {'blank': True, 'null': True}
 # Create your models here.
 
@@ -35,9 +37,9 @@ class Message(models.Model):
     mailing_time = models.TimeField(verbose_name='Время отправки', default='12:00:00')
     periodicity = models.CharField(max_length=10, choices=CHOICES_PERIODICITY, verbose_name='Периодичность рассылки', default='daily')
     mailing_status = models.CharField(max_length=10, choices=STATUS_OPTIONS, verbose_name='Статус', default='created')
-    # start_date = models.DateField(default=date.today, verbose_name='Дата начала рассылки')
-    # end_date = models.DateField(default=date.today, verbose_name='Дата окончания рассылки')
     client = models.ManyToManyField('Client', verbose_name='Клиенты', related_name='messages')
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Автор')
 
     def __str__(self):
         return f'{self.letter_subject}'

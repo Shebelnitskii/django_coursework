@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import TimeInput, DateInput
 from main.models import Message, Client
 
 
@@ -7,10 +6,19 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity']
-        widgets = {
-            'start_date': DateInput(attrs={'type': 'date'}),
-            'end_date': DateInput(attrs={'type': 'date'}),
-        }
+        exclude = ['owner']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.owner = self.user
+        if commit:
+            instance.save()
+        return instance
 
 
 def validate_time(value):

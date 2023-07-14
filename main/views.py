@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -44,11 +45,19 @@ class MessageListView(generic.ListView):
         return context
 
 
-class MessageCreateView(generic.CreateView):
+class MessageCreateView(LoginRequiredMixin, generic.CreateView):
     model = Message
     form_class = MessageForm
+    extra_context = {'title': 'Добавить рассылку'}
 
-    # fields = ('client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity', 'start_date', 'end_date')
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('main:message_list')
