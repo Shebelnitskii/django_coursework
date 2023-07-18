@@ -71,7 +71,6 @@ class MessageUpdateView(generic.UpdateView):
 
     def form_valid(self, form):
         message = self.get_object()
-
         form.instance.owner = message.owner
 
         return super().form_valid(form)
