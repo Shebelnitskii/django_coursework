@@ -57,7 +57,12 @@ class MessageCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        return super().form_valid(form)
+        # Сохраняем объект Message
+        message = form.save()
+        # Привязываем клиентов, выбранных в форме, к сообщению
+        clients = form.cleaned_data['client']
+        message.client.set(clients)
+        return redirect('main:message_list')
 
     def get_success_url(self):
         return reverse('main:message_list')
@@ -72,8 +77,10 @@ class MessageUpdateView(generic.UpdateView):
     def form_valid(self, form):
         message = self.get_object()
         form.instance.owner = message.owner
-
-        return super().form_valid(form)
+        updated_message = form.save()
+        clients = form.cleaned_data['client']
+        updated_message.client.set(clients)
+        return redirect('main:message_list')
 
     def get_success_url(self):
         return reverse('main:message_list')
