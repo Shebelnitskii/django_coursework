@@ -1,7 +1,7 @@
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from main.views import index, MessageListView, MessageCreateView, MessageUpdateView, MessageDetailView, \
-    MessageDeleteView, ClientCreateView, CleitnListView, ClientDeleteView, LogsListView, LogsDetailView, \
+    MessageDeleteView, ClientCreateView, ClientListView, ClientDeleteView, LogsListView, LogsDetailView, \
     complete_mailing
 
 app_name = 'main'
@@ -12,7 +12,7 @@ urlpatterns = [
                   path('message_form/<int:pk>/update/', MessageUpdateView.as_view(), name='message_update'),
                   path('message_detail/<int:pk>/', MessageDetailView.as_view(), name='message_detail'),
                   path('message_delete/<int:pk>/delete/', MessageDeleteView.as_view(), name='message_delete'),
-                  path('client_list/', CleitnListView.as_view(), name='client_list'),
+                  path('client_list/', ClientListView.as_view(), name='client_list'),
                   path('client/create/', ClientCreateView.as_view(), name='client_create'),
                   path('client/<int:pk>/delete/', ClientDeleteView.as_view(), name='client_delete'),
                   path('mailinglogs_list/', LogsListView.as_view(), name='mailinglogs_list'),

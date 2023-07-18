@@ -15,7 +15,8 @@ class MessageForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        instance.owner = self.user
+        if not instance.pk:  # Проверяем, новый ли это объект или существующий
+            instance.owner = self.user
         if commit:
             instance.save()
         return instance

@@ -69,6 +69,13 @@ class MessageUpdateView(generic.UpdateView):
     # fields = ('client', 'letter_subject', 'letter_body', 'mailing_time', 'periodicity', 'start_date', 'end_date')
     extra_context = {'extra_context': 'Изменить рассылку'}
 
+    def form_valid(self, form):
+        message = self.get_object()
+
+        form.instance.owner = message.owner
+
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse('main:message_list')
 
@@ -114,7 +121,7 @@ class ClientCreateView(generic.CreateView):
         return reverse('main:client_list')
 
 
-class CleitnListView(generic.ListView):
+class ClientListView(generic.ListView):
     model = Client
     template_name = 'main/client_list'
     context_object_name = 'client_list'
